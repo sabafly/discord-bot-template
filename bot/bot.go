@@ -9,17 +9,17 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/disgoorg/disgo/bot"
-	"github.com/disgoorg/disgo/events"
 	"github.com/disgoorg/dislog"
 	"github.com/disgoorg/snowflake/v2"
 	"github.com/google/uuid"
 	"github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable"
 	"github.com/sabafly/discord-bot-template/bot/commands"
 	"github.com/sabafly/discord-bot-template/bot/db"
-	botlib "github.com/sabafly/sabafly-lib/bot"
-	"github.com/sabafly/sabafly-lib/handler"
-	"github.com/sabafly/sabafly-lib/translate"
+	"github.com/sabafly/disgo/bot"
+	"github.com/sabafly/disgo/events"
+	botlib "github.com/sabafly/sabafly-lib/v2/bot"
+	"github.com/sabafly/sabafly-lib/v2/handler"
+	"github.com/sabafly/sabafly-lib/v2/translate"
 	"github.com/sirupsen/logrus"
 )
 

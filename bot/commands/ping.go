@@ -1,11 +1,11 @@
 package commands
 
 import (
-	"github.com/disgoorg/disgo/discord"
-	"github.com/disgoorg/disgo/events"
 	"github.com/sabafly/discord-bot-template/bot/db"
-	botlib "github.com/sabafly/sabafly-lib/bot"
-	"github.com/sabafly/sabafly-lib/handler"
+	"github.com/sabafly/disgo/discord"
+	"github.com/sabafly/disgo/events"
+	botlib "github.com/sabafly/sabafly-lib/v2/bot"
+	"github.com/sabafly/sabafly-lib/v2/handler"
 )
 
 func Ping(b *botlib.Bot[*db.DB]) handler.Command {

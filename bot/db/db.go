@@ -4,10 +4,15 @@ import (
 	"fmt"
 
 	"github.com/go-redis/redis"
-	"github.com/sabafly/sabafly-lib/db"
 )
 
-func SetupDatabase(cfg db.DBConfig) (*DB, error) {
+type DBConfig struct {
+	Host string
+	Port string
+	DB   int
+}
+
+func SetupDatabase(cfg DBConfig) (*DB, error) {
 	db := redis.NewClient(&redis.Options{
 		Network: "tcp",
 		Addr:    fmt.Sprintf("%s:%s", cfg.Host, cfg.Port),
@@ -17,8 +22,6 @@ func SetupDatabase(cfg db.DBConfig) (*DB, error) {
 		db: db,
 	}, nil
 }
-
-var _ db.DB = (*DB)(nil)
 
 type DB struct {
 	db *redis.Client
