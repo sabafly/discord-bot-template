@@ -1,14 +1,14 @@
 package commands
 
 import (
-	"github.com/sabafly/discord-bot-template/bot/db"
+	"github.com/sabafly/discord-bot-template/bot/client"
 	"github.com/sabafly/disgo/discord"
 	"github.com/sabafly/disgo/events"
 	botlib "github.com/sabafly/sabafly-lib/v2/bot"
 	"github.com/sabafly/sabafly-lib/v2/handler"
 )
 
-func Ping(b *botlib.Bot[*db.DB]) handler.Command {
+func Ping(b *botlib.Bot[*client.Client]) handler.Command {
 	return handler.Command{
 		Create: discord.SlashCommandCreate{
 			Name:        "ping",
@@ -20,7 +20,7 @@ func Ping(b *botlib.Bot[*db.DB]) handler.Command {
 	}
 }
 
-func pingCommandHandler(b *botlib.Bot[*db.DB]) handler.CommandHandler {
+func pingCommandHandler(b *botlib.Bot[*client.Client]) handler.CommandHandler {
 	return func(event *events.ApplicationCommandInteractionCreate) error {
 		message := discord.NewMessageCreateBuilder()
 		message.SetContent("pong!")

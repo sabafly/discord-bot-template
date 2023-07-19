@@ -7,9 +7,9 @@ import (
 )
 
 type DBConfig struct {
-	Host string
-	Port string
-	DB   int
+	Host string `json:"host"`
+	Port string `json:"port"`
+	DB   int    `json:"db"`
 }
 
 func SetupDatabase(cfg DBConfig) (*DB, error) {

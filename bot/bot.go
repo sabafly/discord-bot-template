@@ -11,8 +11,8 @@ import (
 
 	"github.com/disgoorg/dislog"
 	"github.com/disgoorg/snowflake/v2"
-	"github.com/google/uuid"
 	"github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable"
+	"github.com/sabafly/discord-bot-template/bot/client"
 	"github.com/sabafly/discord-bot-template/bot/commands"
 	"github.com/sabafly/discord-bot-template/bot/db"
 	"github.com/sabafly/disgo/bot"
@@ -37,6 +37,10 @@ func Run(config_path, lang_path string) {
 		panic(err)
 	}
 	cfg, err := botlib.LoadConfig(config_path)
+	if err != nil {
+		panic(err)
+	}
+	bot_config, err := client.LoadConfig("bot_config.json")
 	if err != nil {
 		panic(err)
 	}
@@ -69,13 +73,14 @@ func Run(config_path, lang_path string) {
 	logger.Infof("Starting bot version: %s", version)
 	logger.Infof("Syncing commands? %t", cfg.ShouldSyncCommands)
 
-	b := botlib.New[*db.DB](logger, version, *cfg)
+	b := botlib.New[*client.Client](logger, version, *cfg)
 
-	b.DB, err = db.SetupDatabase(cfg.DBConfig)
+	db, err := db.SetupDatabase(bot_config.DBConfig)
 	if err != nil {
 		panic(err)
 	}
-	defer func() { _ = b.DB.Close() }()
+	b.Self.DB = db
+	defer func() { _ = b.Self.DB.Close() }()
 
 	b.Handler.AddCommands(
 		commands.Ping(b),
@@ -85,9 +90,8 @@ func Run(config_path, lang_path string) {
 
 	b.Handler.AddModals()
 
-	b.Handler.AddMemberJoins(
-		handler.MemberJoin{
-			UUID: uuid.New(),
+	b.Handler.MemberJoin.Adds(
+		handler.Generics[events.GuildMemberJoin]{
 			Handler: func(event *events.GuildMemberJoin) error {
 				b.OnGuildMemberJoin(event)
 				return nil
@@ -95,9 +99,8 @@ func Run(config_path, lang_path string) {
 		},
 	)
 
-	b.Handler.AddMemberLeaves(
-		handler.MemberLeave{
-			UUID: uuid.New(),
+	b.Handler.MemberLeave.Adds(
+		handler.Generics[events.GuildMemberLeave]{
 			Handler: func(event *events.GuildMemberLeave) error {
 				b.OnGuildMemberLeave(event)
 				return nil

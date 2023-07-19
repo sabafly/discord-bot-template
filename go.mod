@@ -3,6 +3,7 @@ module github.com/sabafly/discord-bot-template
 go 1.20
 
 require (
+	github.com/BurntSushi/toml v1.0.0
 	github.com/disgoorg/dislog v1.1.0
 	github.com/disgoorg/snowflake/v2 v2.0.1
 	github.com/go-redis/redis v6.15.9+incompatible
@@ -12,6 +13,7 @@ require (
 	github.com/sabafly/sabafly-lib/v2 v2.5.4
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.7.0
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
@@ -31,5 +33,4 @@ require (
 	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df // indirect
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
